@@ -1,7 +1,12 @@
 package Controllers;
 
+import Entities.Band;
+import Entities.BandMember;
+import Entities.Worker;
 import GUI.Window;
 import Interfaces.AdminListener;
+
+import java.util.ArrayList;
 
 public class AdminController implements AdminListener {
     private Window window;
@@ -19,6 +24,30 @@ public class AdminController implements AdminListener {
         } else {
             System.out.println("Log in failure");
         }
+    }
+
+    public void addBand(Band band){
+        SQLController.addBand(band);
+    }
+
+    public void addWorker(Worker worker){
+        SQLController.addWorker(worker);
+    }
+
+    public void addBandMember(BandMember bandMember){
+        SQLController.addBandMember(bandMember);
+    }
+
+    public void addBandMemberAssociation(String bandMemberID, String bandID){
+        SQLController.addBandMemberAssociation(bandMemberID, bandID);
+    }
+
+    public ArrayList<Band> getBands(){
+        return SQLController.getBands();
+    }
+
+    public ArrayList<Worker> getWorkers(){
+        return SQLController.getWorkers();
     }
 
     @Override

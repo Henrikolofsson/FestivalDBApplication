@@ -23,7 +23,13 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="15fa5cd5-fb0d-48be-9f5d-e6cc1767bfdb">
+        <schema name="information_schema" object-types="table, view" />
+        <schema name="pg_catalog" object-types="table, view" />
+        <schema name="public" object-types="table, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="15fa5cd5-fb0d-48be-9f5d-e6cc1767bfdb">
@@ -121,7 +127,7 @@ CREATE TABLE security_schedule (
   </component>
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
     <recently-used-interfaces>
-      <mapping database-type="POSTGRES" interface-id="7e6208d0-ac07-42d4-b8d8-8f4a00863d99" />
+      <mapping database-type="POSTGRES" interface-id="113c0b42-4bd2-4410-b532-8ece6bb11298" />
     </recently-used-interfaces>
   </component>
   <component name="DBNavigator.Project.Settings">
@@ -314,11 +320,11 @@ CREATE TABLE security_schedule (
         <data-length-threshold value="100" />
         <popup-delay value="1000" />
       </text-editor-popup>
-      <values-list-popup>
+      <values-actions-popup>
         <show-popup-button value="true" />
         <element-count-threshold value="1000" />
         <data-length-threshold value="250" />
-      </values-list-popup>
+      </values-actions-popup>
       <general>
         <fetch-block-size value="100" />
         <fetch-timeout value="30" />
@@ -531,6 +537,7 @@ CREATE TABLE security_schedule (
       <script-execution>
         <command-line-interfaces>
           <value id="7e6208d0-ac07-42d4-b8d8-8f4a00863d99" name="PostgreSQL terminal" executable-path="C:/Program Files/PostgreSQL/11/bin/psql.exe" database-type="POSTGRES" />
+          <value id="113c0b42-4bd2-4410-b532-8ece6bb11298" name="PostgreSQL terminal 2" executable-path="$USER_HOME$/Postgresql/pgsql/bin/psql.exe" database-type="POSTGRES" />
         </command-line-interfaces>
         <execution-timeout value="300" />
       </script-execution>

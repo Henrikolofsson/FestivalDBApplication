@@ -45,6 +45,7 @@ public class Window extends JFrame {
         startPanel.addUserListener();
 
         logInPanel.setAdminController(adminController);
+        managePanel.setAdminController(adminController);
     }
 
     private void setStartPanel(JFrame frame){

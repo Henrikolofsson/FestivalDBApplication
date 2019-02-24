@@ -5,6 +5,7 @@ public class Worker {
     private String name;
     private String address;
 
+
     public Worker(String person_number, String name, String address) {
         this.person_number = person_number;
         this.name = name;
@@ -25,5 +26,14 @@ public class Worker {
 
     public String getAddress() {
         return address;
+    }
+
+    @Override
+    public String toString() {
+        return "Worker{" +
+                "person_number='" + person_number + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }
