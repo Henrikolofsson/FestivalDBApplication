@@ -31,6 +31,14 @@ public class Band {
         return band_country_of_origin;
     }
 
+    public String getBand_id() {
+        return band_id;
+    }
+
+    public void setBand_id(String band_id) {
+        this.band_id = band_id;
+    }
+
     @Override
     public String toString() {
         return "Band{" +

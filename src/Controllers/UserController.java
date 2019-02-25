@@ -12,4 +12,15 @@ public class UserController implements UserListener {
         this.sqlController = sqlController;
     }
 
+    @Override
+    public void setUserPanel() {
+        window.setUserPanel();
+    }
+
+    @Override
+    public void setBandInformationPanel() {
+        window.setBandInformationPanel();
+    }
+
+
 }

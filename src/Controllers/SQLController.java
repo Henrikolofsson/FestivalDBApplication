@@ -2,9 +2,11 @@ package Controllers;
 
 import Entities.Band;
 import Entities.BandMember;
+import Entities.Concerts;
 import Entities.Worker;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class SQLController {
@@ -36,11 +38,12 @@ public class SQLController {
     public static void addBand(Band band){
         try {
             PreparedStatement stmt = dbConnection.prepareStatement("INSERT INTO " +
-                    "bands(band_name, band_country_of_origin, band_info, contact_person_id)" + "VALUES(?, ?, ?, ?)");
-            stmt.setString(1, band.getBand_name());
-            stmt.setString(2, band.getBand_country_of_origin());
-            stmt.setString(3, band.getBand_info());
-            stmt.setString(4, band.getContact_person_id());
+                    "bands(band_id, band_name, band_country_of_origin, band_info, contact_person_id)" + "VALUES(?, ?, ?, ?, ?)");
+            stmt.setString(1, band.getBand_id());
+            stmt.setString(2, band.getBand_name());
+            stmt.setString(3, band.getBand_country_of_origin());
+            stmt.setString(4, band.getBand_info());
+            stmt.setString(5, band.getContact_person_id());
             stmt.executeUpdate();
             stmt.close();
         } catch(SQLException e){
@@ -68,6 +71,9 @@ public class SQLController {
             stmt.setString(1, bandMember.getBand_member_id());
             stmt.setString(2, bandMember.getBand_id());
             stmt.setString(3, bandMember.getBand_member_info());
+            stmt.executeQuery();
+            stmt.close();
+            System.out.println(bandMember);
         } catch(SQLException e){
             e.printStackTrace();
         }
@@ -78,6 +84,24 @@ public class SQLController {
             PreparedStatement stmt = dbConnection.prepareStatement("INSERT INTO bandmember VALUES(?, ?)");
             stmt.setString(1, bandmemberID);
             stmt.setString(2, bandID);
+            stmt.executeQuery();
+            stmt.close();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void addConcertToSchedule(Concerts concert){
+        try {
+            PreparedStatement stmt = dbConnection.prepareStatement("INSERT INTO schedule VALUES(?, ?, ?, ?)");
+            stmt.setString(1, concert.getDay());
+            Time time = Time.valueOf(concert.getTime());
+            stmt.setTime(2, time);
+            stmt.setString(3, concert.getBand_id());
+            stmt.setString(4, concert.getScene());
+
+            stmt.executeQuery();
+            stmt.close();
         } catch(SQLException e){
             e.printStackTrace();
         }
@@ -124,6 +148,52 @@ public class SQLController {
             e.printStackTrace();
         }
         return bands;
+    }
+
+    public static ArrayList<BandMember> getBandMembers(){
+        ArrayList<BandMember> bandMembers = new ArrayList<>();
+        try {
+            PreparedStatement stmt = dbConnection.prepareStatement("SELECT * FROM bandmember");
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                String band_member_id = rs.getString("band_member_id");
+                String band_id = rs.getString("band_id");
+                String band_info = rs.getString("band_member_info");
+                System.out.println(bandMembers);
+                bandMembers.add(new BandMember(band_member_id, band_id, band_info));
+            }
+            stmt.close();
+            rs.close();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return bandMembers;
+    }
+
+    public static ArrayList<Concerts> getConcertsFromStage(String stage){
+        ArrayList<Concerts> concertsOnStage = new ArrayList<>();
+        try {
+            PreparedStatement stmt = dbConnection.prepareStatement("SELECT day, schedule_time, band_id_playing " +
+                    "FROM schedule WHERE scene = ? ORDER BY schedule_time ASC");
+            stmt.setString(1, stage);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                String day = rs.getString("day");
+                Time time = rs.getTime("schedule_time");
+                String band_id_playing = rs.getString("band_id_playing");
+                Concerts concert = new Concerts(band_id_playing, day, time.toString(), stage);
+                concertsOnStage.add(concert);
+                System.out.println(time.toString());
+                System.out.println(day + " " + time.toString() + " " + band_id_playing);
+            }
+            stmt.close();
+            rs.close();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return concertsOnStage;
     }
 
     public boolean logIn(String userName, String password){

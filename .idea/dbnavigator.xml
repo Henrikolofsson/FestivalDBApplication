@@ -25,15 +25,15 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="15fa5cd5-fb0d-48be-9f5d-e6cc1767bfdb">
-        <schema name="information_schema" object-types="table, view" />
-        <schema name="pg_catalog" object-types="table, view" />
-        <schema name="public" object-types="table, view" />
+        <schema name="information_schema" object-types="view, table" />
+        <schema name="pg_catalog" object-types="view, table" />
+        <schema name="public" object-types="view, table" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="15fa5cd5-fb0d-48be-9f5d-e6cc1767bfdb">
-      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[-- Mörtfors Rock Festival
+      <console name="Connection" type="STANDARD" schema="" session="Main">-- Mörtfors Rock Festival
 
 DROP DATABASE IF EXISTS ai0026project;
 CREATE DATABASE ai0026project;
@@ -62,8 +62,8 @@ CREATE TABLE bands (
 
 -- The festival schedule
 CREATE TABLE schedule (
-    day                     date    NOT NULL,
-    time                    time    NOT NULL,
+    day                     text    NOT NULL,
+    time_of_day             time    NOT NULL,
     band_playing            text    NOT NULL REFERENCES bands,
     scene                   text    NOT NULL REFERENCES scenes,
     PRIMARY KEY (day, time, scene)
@@ -95,7 +95,7 @@ CREATE TABLE security_schedule (
     scene                   text    NOT NULL REFERENCES scenes,
     responsible_worker      text    NOT NULL REFERENCES workers,
     PRIMARY KEY (day, time, scene)
-);]]></console>
+);</console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

@@ -2,6 +2,7 @@ package Controllers;
 
 import Entities.Band;
 import Entities.BandMember;
+import Entities.Concerts;
 import Entities.Worker;
 import GUI.Window;
 import Interfaces.AdminListener;
@@ -42,12 +43,24 @@ public class AdminController implements AdminListener {
         SQLController.addBandMemberAssociation(bandMemberID, bandID);
     }
 
+    public void addConcertToSchedule(Concerts concert){
+        SQLController.addConcertToSchedule(concert);
+    }
+
     public ArrayList<Band> getBands(){
         return SQLController.getBands();
     }
 
     public ArrayList<Worker> getWorkers(){
         return SQLController.getWorkers();
+    }
+
+    public ArrayList<BandMember> getBandMembers(){
+        return SQLController.getBandMembers();
+    }
+
+    public ArrayList<Concerts> getConsertsFromSchedule(String stage){
+       return SQLController.getConcertsFromStage(stage);
     }
 
     @Override

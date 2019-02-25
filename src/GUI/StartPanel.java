@@ -94,6 +94,7 @@ public class StartPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == btnUser){
                 System.out.println("LEFTY");
+                userController.setUserPanel();
             }
         }
     }

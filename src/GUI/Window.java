@@ -15,6 +15,8 @@ public class Window extends JFrame {
     private StartPanel startPanel = new StartPanel();
     private PanelAdminLogIn logInPanel = new PanelAdminLogIn();
     private PanelManage managePanel = new PanelManage();
+    private PanelUser userPanel = new PanelUser();
+    private PanelBandInformation bandInformationPanel = new PanelBandInformation();
 
     public Window(int width, int height){
         this.width = width;
@@ -46,6 +48,11 @@ public class Window extends JFrame {
 
         logInPanel.setAdminController(adminController);
         managePanel.setAdminController(adminController);
+
+        userPanel.setUserController(userController);
+        userPanel.addUserListener();
+
+        bandInformationPanel.setUserController(userController);
     }
 
     private void setStartPanel(JFrame frame){
@@ -62,6 +69,20 @@ public class Window extends JFrame {
     public void setManagePanel(){
         remove(logInPanel);
         add(managePanel);
+        setVisible(true);
+        pack();
+    }
+
+    public void setUserPanel(){
+        remove(startPanel);
+        add(userPanel);
+        setVisible(true);
+        pack();
+    }
+
+    public void setBandInformationPanel(){
+        remove(userPanel);
+        add(bandInformationPanel);
         setVisible(true);
         pack();
     }

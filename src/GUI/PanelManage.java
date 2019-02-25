@@ -4,6 +4,7 @@ import Controllers.AdminController;
 import Controllers.SQLController;
 import Entities.Band;
 import Entities.BandMember;
+import Entities.Concerts;
 import Entities.Worker;
 
 import javax.swing.*;
@@ -60,7 +61,7 @@ public class PanelManage extends JPanel {
 
     private String[] stages = new String[]{"Green", "Red", "Blue"};
     private String[] days = new String[]{"Thursday", "Friday", "Saturday"};
-    private String[] time = new String[]{"19:00", "20:00", "21:00", "22:00", "23:00"};
+    private String[] time = new String[]{"19:00:00", "20:00:00", "21:00:00", "22:00:00", "23:00:00"};
 
     private Border titledWorkerBorder = BorderFactory.createTitledBorder("Manage Workers");
     private Border titledBandBorder = BorderFactory.createTitledBorder("Manage Bands");
@@ -404,7 +405,10 @@ public class PanelManage extends JPanel {
                 adminController.addBandMemberAssociation(txtBandMemberId.getText(), txtBandMemberBandId.getText());
             }
             else if(e.getSource() == btnShowBandMembers){
-
+                ArrayList<BandMember> bandMembers = adminController.getBandMembers();
+                for(BandMember bm : bandMembers){
+                    System.out.println(bm);
+                }
             }
         }
     }
@@ -413,10 +417,17 @@ public class PanelManage extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == btnAddConcert){
+                Concerts concert = new Concerts(txtConcertBandID.getText(), cbConcertDay.getSelectedItem().toString(),
+                cbConcertTime.getSelectedItem().toString(), cbConcertStage.getSelectedItem().toString());
 
+                adminController.addConcertToSchedule(concert);
             }
             else if(e.getSource() == btnShowConcerts){
                 System.out.println("BTNSHOWCONCERTS");
+                ArrayList<Concerts> concerts = SQLController.getConcertsFromStage("Green");
+                for(Concerts c : concerts){
+                    System.out.println(c);
+                }
             }
         }
     }
