@@ -53,13 +53,13 @@ public class PanelManage extends JPanel {
     private JButton btnShowWorkers;
     private JButton btnShowBands;
     private JButton btnShowBandMembers;
-    private JButton btnShowConcerts;
+    private JButton btnBack;
 
     private JComboBox cbConcertStage;
     private JComboBox cbConcertDay;
     private JComboBox cbConcertTime;
 
-    private String[] stages = new String[]{"Green", "Red", "Blue"};
+    private String[] stages = new String[]{"Red", "Green", "Blue"};
     private String[] days = new String[]{"Thursday", "Friday", "Saturday"};
     private String[] time = new String[]{"19:00:00", "20:00:00", "21:00:00", "22:00:00", "23:00:00"};
 
@@ -123,7 +123,7 @@ public class PanelManage extends JPanel {
         btnShowWorkers = new JButton("SHOW WORKERS");
         btnShowBands = new JButton("SHOW BANDS");
         btnShowBandMembers = new JButton("SHOW BAND MEMBERS");
-        btnShowConcerts = new JButton("SHOW CONCERTS");
+        btnBack = new JButton("BACK");
 
         //GRIDBAGCONSTRAINTS FOR WORKERS
 
@@ -330,7 +330,7 @@ public class PanelManage extends JPanel {
         pnlSouthConcert.add(cbConcertTime, gcCbConcertTime);
         pnlSouthConcert.add(btnAddConcert, gcBtnAddConcert);
 
-        pnlSouthConcert.add(btnShowConcerts, gcBtnShowConcerts);
+        pnlSouthConcert.add(btnBack, gcBtnShowConcerts);
 
 
         pnlCenterBand.add(pnlManageBands, BorderLayout.CENTER);
@@ -358,7 +358,7 @@ public class PanelManage extends JPanel {
         btnShowBandMembers.addActionListener(bandMemberListener);
 
         btnAddConcert.addActionListener(concertListener);
-        btnShowConcerts.addActionListener(concertListener);
+        btnBack.addActionListener(new ButtonBackListener());
     }
 
     private class WorkerButtonsListener implements ActionListener {
@@ -400,7 +400,7 @@ public class PanelManage extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == btnAddBandMember){
-              BandMember bandMember = new BandMember(txtBandMemberId.getText(), txtBandMemberBandId.getText(), txtBandMemberInfo.getText());
+              BandMember bandMember = new BandMember(Integer.parseInt(txtBandMemberId.getText()), txtBandMemberBandId.getText(), txtBandMemberInfo.getText());
                 adminController.addBandMember(bandMember);
                 adminController.addBandMemberAssociation(txtBandMemberId.getText(), txtBandMemberBandId.getText());
             }
@@ -422,12 +422,14 @@ public class PanelManage extends JPanel {
 
                 adminController.addConcertToSchedule(concert);
             }
-            else if(e.getSource() == btnShowConcerts){
-                System.out.println("BTNSHOWCONCERTS");
-                ArrayList<Concerts> concerts = SQLController.getConcertsFromStage("Green");
-                for(Concerts c : concerts){
-                    System.out.println(c);
-                }
+        }
+    }
+
+    private class ButtonBackListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == btnBack){
+               adminController.onBackButtonPressed("PanelManage");
             }
         }
     }

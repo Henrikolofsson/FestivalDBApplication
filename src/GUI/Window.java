@@ -1,6 +1,7 @@
 package GUI;
 
 import Controllers.AdminController;
+import Controllers.SQLController;
 import Controllers.UserController;
 
 import javax.swing.*;
@@ -17,6 +18,8 @@ public class Window extends JFrame {
     private PanelManage managePanel = new PanelManage();
     private PanelUser userPanel = new PanelUser();
     private PanelBandInformation bandInformationPanel = new PanelBandInformation();
+    private PanelSchedule panelSchedule = new PanelSchedule();
+    private RetainedPanel retainedPanel = new RetainedPanel();
 
     public Window(int width, int height){
         this.width = width;
@@ -53,10 +56,69 @@ public class Window extends JFrame {
         userPanel.addUserListener();
 
         bandInformationPanel.setUserController(userController);
+        panelSchedule.setUserController(userController);
     }
 
     private void setStartPanel(JFrame frame){
         frame.add(startPanel);
+    }
+
+    public void onBackButtonPressed(String currentPanel){
+        switch (currentPanel){
+            case "PanelAdminLogIn":
+                setStartPanel("PanelAdminLogIn");
+                break;
+
+            case "PanelManage":
+                remove(managePanel);
+                add(logInPanel);
+                setVisible(true);
+                pack();
+                repaint();
+                break;
+
+            case "PanelUser":
+                remove(userPanel);
+                add(startPanel);
+                setVisible(true);
+                pack();
+                repaint();
+                break;
+
+            case "PanelSchedule":
+                remove(panelSchedule);
+                add(userPanel);
+                setVisible(true);
+                pack();
+                repaint();
+                break;
+
+            case "PanelBandInformation":
+                remove(bandInformationPanel);
+                add(userPanel);
+                setVisible(true);
+                pack();
+                repaint();
+                break;
+        }
+    }
+
+    public void setStartPanel(String fromPanel){
+        if(fromPanel.equals("PanelAdminLogIn")){
+            System.out.println("true");
+            remove(logInPanel);
+            add(startPanel);
+            setVisible(true);
+            pack();
+            repaint();
+        }
+        else {
+            remove(userPanel);
+            add(startPanel);
+            setVisible(true);
+            pack();
+            repaint();
+        }
     }
 
     public void setLogInPanel(){
@@ -64,6 +126,7 @@ public class Window extends JFrame {
         add(logInPanel);
         setVisible(true);
         pack();
+        repaint();
     }
 
     public void setManagePanel(){
@@ -71,6 +134,7 @@ public class Window extends JFrame {
         add(managePanel);
         setVisible(true);
         pack();
+        repaint();
     }
 
     public void setUserPanel(){
@@ -78,17 +142,25 @@ public class Window extends JFrame {
         add(userPanel);
         setVisible(true);
         pack();
+        repaint();
     }
 
     public void setBandInformationPanel(){
         remove(userPanel);
+        bandInformationPanel.setBandList(SQLController.getBands());
         add(bandInformationPanel);
         setVisible(true);
         pack();
+        repaint();
     }
 
 
-
-
-
+    public void setSchedulePanel() {
+        remove(userPanel);
+        panelSchedule.setConcertLists();
+        add(panelSchedule);
+        setVisible(true);
+        pack();
+        repaint();
+    }
 }

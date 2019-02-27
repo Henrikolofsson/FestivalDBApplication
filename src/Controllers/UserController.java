@@ -22,5 +22,14 @@ public class UserController implements UserListener {
         window.setBandInformationPanel();
     }
 
+    @Override
+    public void setSchedulePanel() {
+        window.setSchedulePanel();
+    }
+
+    public void onBackButtonPressed(String currentPanel){
+        window.onBackButtonPressed(currentPanel);
+    }
+
 
 }

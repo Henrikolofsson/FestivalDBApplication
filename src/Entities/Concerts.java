@@ -5,6 +5,7 @@ public class Concerts {
     private String day;
     private String time;
     private String scene;
+    private String band_name;
 
     public Concerts(String band_id, String day, String time, String scene){
         this.band_id = band_id;
@@ -43,6 +44,14 @@ public class Concerts {
 
     public void setScene(String scene) {
         this.scene = scene;
+    }
+
+    public String getBand_name() {
+        return band_name;
+    }
+
+    public void setBand_name(String band_name) {
+        this.band_name = band_name;
     }
 
     @Override

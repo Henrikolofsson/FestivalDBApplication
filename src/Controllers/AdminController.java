@@ -56,7 +56,8 @@ public class AdminController implements AdminListener {
     }
 
     public ArrayList<BandMember> getBandMembers(){
-        return SQLController.getBandMembers();
+       // return SQLController.getBandMembers();
+        return null;
     }
 
     public ArrayList<Concerts> getConsertsFromSchedule(String stage){
@@ -67,5 +68,9 @@ public class AdminController implements AdminListener {
     public void setLogInPanel() {
         System.out.println("PUSHED BUTTON");
         window.setLogInPanel();
+    }
+
+    public void onBackButtonPressed(String currentPanel){
+        window.onBackButtonPressed(currentPanel);
     }
 }

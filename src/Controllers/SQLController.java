@@ -69,7 +69,7 @@ public class SQLController {
         try {
             PreparedStatement stmt = dbConnection.prepareStatement("INSERT INTO bandmember VALUES(?, ?, ?)");
             stmt.setString(1, bandMember.getBand_member_id());
-            stmt.setString(2, bandMember.getBand_id());
+            stmt.setString(2, bandMember.getBand_member_name());
             stmt.setString(3, bandMember.getBand_member_info());
             stmt.executeQuery();
             stmt.close();
@@ -100,7 +100,7 @@ public class SQLController {
             stmt.setString(3, concert.getBand_id());
             stmt.setString(4, concert.getScene());
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
             stmt.close();
         } catch(SQLException e){
             e.printStackTrace();
@@ -150,7 +150,7 @@ public class SQLController {
         return bands;
     }
 
-    public static ArrayList<BandMember> getBandMembers(){
+    public static ArrayList<BandMember> getBandMembers(String band_id){
         ArrayList<BandMember> bandMembers = new ArrayList<>();
         try {
             PreparedStatement stmt = dbConnection.prepareStatement("SELECT * FROM bandmember");
@@ -158,7 +158,7 @@ public class SQLController {
 
             while(rs.next()){
                 String band_member_id = rs.getString("band_member_id");
-                String band_id = rs.getString("band_id");
+                //String band_id = rs.getString("band_id");
                 String band_info = rs.getString("band_member_info");
                 System.out.println(bandMembers);
                 bandMembers.add(new BandMember(band_member_id, band_id, band_info));
@@ -170,6 +170,7 @@ public class SQLController {
         }
         return bandMembers;
     }
+
 
     public static ArrayList<Concerts> getConcertsFromStage(String stage){
         ArrayList<Concerts> concertsOnStage = new ArrayList<>();
@@ -212,6 +213,93 @@ public class SQLController {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+    public static int getBandId(String bandName){
+        int bandId = -1;
+        try {
+            PreparedStatement stmt = dbConnection.prepareStatement("SELECT band_id FROM bands WHERE band_name = ?");
+            stmt.setString(1, bandName);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+               bandId = rs.getInt("band_id");
+            }
+            stmt.close();
+            rs.close();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return bandId;
+    }
+
+    public static ArrayList<Integer> getBandMemberAssociations(String bandId){
+        ArrayList<Integer> bandMemberAssociations = new ArrayList<>();
+        try {
+            PreparedStatement stmt = dbConnection.prepareStatement("SELECT * FROM bandmember_association WHERE band_id = ?");
+            stmt.setString(1, bandId);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                bandMemberAssociations.add(rs.getInt("bandmember_id"));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return bandMemberAssociations;
+    }
+
+    public static BandMember getBandMember(int bandmember_id){
+        BandMember bandMember = null;
+        try {
+            PreparedStatement stmt = dbConnection.prepareStatement("SELECT * FROM bandmember WHERE bandmember_id = ?");
+            stmt.setInt(1, bandmember_id);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                bandMember = new BandMember(rs.getString("bandmember_id"), rs.getString("bandmember_name"), rs.getString("bandmember_info"));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return bandMember;
+    }
+
+    public static String getBandInformation(String band_id){
+        String bandinfo = "";
+        try {
+            PreparedStatement stmt = dbConnection.prepareStatement("SELECT band_info FROM bands WHERE band_id = ?");
+            stmt.setString(1, band_id);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                bandinfo = rs.getString("band_info");
+            }
+            stmt.close();
+            rs.close();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return bandinfo;
+    }
+
+    public static String getBandName(String band_id){
+        String bandname = "";
+        try {
+            PreparedStatement stmt = dbConnection.prepareStatement("SELECT band_name FROM bands WHERE band_id = ?");
+            stmt.setString(1, band_id);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                bandname = rs.getString("band_name");
+            }
+            stmt.close();
+            rs.close();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return bandname;
     }
 
 }
